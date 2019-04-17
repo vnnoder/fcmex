@@ -23,7 +23,7 @@ defmodule Fcmex do
     |> Enum.chunk(1000, 1000, [])
     |> Enum.map(&%{to: &1})
     |> Flow.from_enumerable(stages: @max_concurrent_connection)
-    |> Flow.map(&Request.perform(&1.to, opts))
+    |> Flow.map(&{&1.to, Request.perform(&1.to, opts)})
     |> Enum.to_list()
   end
 
